@@ -338,8 +338,10 @@
   .paper-venue{font-family:'JetBrains Mono',monospace; font-size:0.76rem; color:var(--cyan); margin-bottom:10px;}
   .paper-title{font-size:1.15rem; line-height:1.4;}
   .paper-desc{color:#C7CDD3; font-size:0.92rem; margin-top:12px; max-width:68ch;}
-  .paper-meta{margin-top:16px; font-size:0.85rem; color:var(--muted);}
-  .paper-meta a{color:var(--amber); text-decoration:none;}
+  .paper-list{margin:16px 0 0; padding-left:18px; color:#C7CDD3; font-size:0.9rem; max-width:70ch;}
+  .paper-list li{margin-bottom:8px;}
+  .paper-meta{margin-top:18px; display:flex; flex-wrap:wrap; gap:10px 20px; font-size:0.85rem; color:var(--muted);}
+  .paper-meta a{color:var(--amber); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:0.82rem;}
   .paper-meta a:hover{text-decoration:underline;}
 
   /* --- Blog carousel --- */
@@ -352,16 +354,41 @@
   .blog-scroller::-webkit-scrollbar-thumb{background:var(--line-bright); border-radius:3px;}
   .blog-card{
     scroll-snap-align:start;
-    min-width:260px; max-width:260px;
-    padding:20px;
+    min-width:270px; max-width:270px;
+    padding:0;
     text-decoration:none;
-    display:flex; flex-direction:column; gap:12px;
+    display:flex; flex-direction:column;
+    overflow:visible;
     transition:border-color .15s ease, transform .15s ease;
   }
   .blog-card:hover{border-color:var(--amber); transform:translateY(-3px);}
-  .blog-idx{font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted-dim);}
-  .blog-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:0.98rem; line-height:1.35; color:var(--text);}
-  .blog-open{margin-top:auto; font-family:'JetBrains Mono',monospace; font-size:0.76rem; color:var(--amber);}
+  .blog-card:hover .blog-icon{border-color:var(--amber); color:var(--amber);}
+  .blog-latest{border-color:var(--amber);}
+  .blog-latest-badge{
+    position:absolute; top:-11px; right:12px;
+    background:var(--amber); color:#0A0C0F;
+    font-family:'JetBrains Mono',monospace; font-size:0.65rem; font-weight:600;
+    padding:2px 8px; border-radius:2px; letter-spacing:0.03em;
+  }
+  .blog-media{
+    height:96px; display:flex; align-items:center; justify-content:center;
+    border-bottom:1px solid var(--line);
+    background:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size:14px 14px;
+  }
+  .blog-icon{
+    width:44px; height:44px; border-radius:50%;
+    border:1px solid var(--line-bright); color:var(--cyan);
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .blog-icon svg{width:22px; height:22px;}
+  .blog-body{padding:16px 18px 18px; display:flex; flex-direction:column; gap:10px; flex:1;}
+  .blog-idx{font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--muted-dim);}
+  .blog-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:0.96rem; line-height:1.35; color:var(--text);}
+  .blog-open{margin-top:auto; font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--amber);}
   .scroll-hint{font-size:0.78rem; color:var(--muted-dim); margin-top:-8px; margin-bottom:20px;}
 
   /* --- Achievements --- */
@@ -393,18 +420,133 @@
   .lead-org{color:var(--muted); font-size:0.82rem; margin-top:3px;}
 
   /* --- Contact / footer --- */
-  .contact-card{padding:40px 36px; text-align:left;}
+  .contact-card{padding:40px 36px; text-align:left; position:relative;}
   .contact-card h2{font-size:1.7rem; max-width:16ch;}
   .contact-links{display:flex; flex-wrap:wrap; gap:14px; margin-top:26px;}
+  .contact-flex{display:flex; gap:32px; align-items:flex-end; justify-content:space-between; flex-wrap:wrap;}
+  .contact-content{flex:1 1 380px; min-width:260px;}
+  .contact-bot{flex:none; width:130px; height:170px; pointer-events:none;}
+  @media (max-width:760px){ .contact-bot{display:none;} }
+  #botArm{transform-box:fill-box; transform-origin:0% 100%;}
+  .bot-wave #botArm{animation:botWave 0.85s ease-in-out infinite;}
+  @keyframes botWave{
+    0%,100%{ transform:rotate(0deg); }
+    25%{ transform:rotate(-24deg); }
+    50%{ transform:rotate(-6deg); }
+    75%{ transform:rotate(-28deg); }
+  }
   footer{border-top:1px solid var(--line); padding:26px 0; color:var(--muted-dim); font-size:0.8rem;}
   .foot-wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;}
   .foot-wrap span{font-family:'JetBrains Mono',monospace;}
+
+  /* --- Fun button + chaos battle overlay --- */
+  .fun-zone{display:flex; justify-content:center; padding:20px 0 60px;}
+  .fun-btn{
+    font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--amber);
+    background:transparent; border:1px dashed var(--amber); border-radius:4px;
+    padding:12px 22px; cursor:pointer; letter-spacing:0.02em;
+    transition:background .15s ease, color .15s ease;
+  }
+  .fun-btn:hover{background:var(--amber-dim);}
+
+  .chaos-overlay{
+    position:fixed; inset:0; z-index:10000;
+    background:#000; display:none; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .chaos-overlay.active{display:flex;}
+  body.chaos-lock{overflow:hidden;}
+  body.chaos-shake{animation:chaosShake 0.15s infinite;}
+  @keyframes chaosShake{
+    0%{ transform:translate(0,0); }
+    25%{ transform:translate(-3px,2px); }
+    50%{ transform:translate(3px,-2px); }
+    75%{ transform:translate(-2px,-3px); }
+    100%{ transform:translate(2px,3px); }
+  }
+  body.chaos-fade{ transition:opacity .8s ease; opacity:0; }
+  .chaos-arena{position:relative; width:100%; height:100%;}
+  .chaos-drone{
+    position:absolute; width:72px; height:72px; left:20%; top:28%;
+    transition:left .35s ease, top .35s ease;
+  }
+  .chaos-drone svg{width:100%; height:100%;}
+  .chaos-bot{position:absolute; width:120px; height:150px; left:58%; top:48%;}
+  .chaos-bot svg{width:100%; height:100%;}
+  .chaos-spark{
+    position:absolute; width:6px; height:6px; border-radius:50%; background:var(--amber);
+    animation:chaosSpark 0.4s ease-out forwards;
+  }
+  @keyframes chaosSpark{ 0%{ opacity:1; transform:scale(1);} 100%{ opacity:0; transform:scale(3);} }
+  .chaos-text{
+    position:absolute; top:14%; left:50%; transform:translateX(-50%);
+    font-family:'JetBrains Mono',monospace; font-size:clamp(1rem,3.4vw,1.7rem);
+    color:var(--amber); text-align:center; opacity:0; letter-spacing:0.02em;
+    text-shadow:2px 0 var(--cyan), -2px 0 #ff4d4d;
+    transition:opacity .3s ease; max-width:80vw;
+  }
+  .chaos-text.show{opacity:1;}
+
+  /* --- Custom drone cursor --- */
+  @media (pointer:fine){
+    html.drone-cursor, html.drone-cursor *{ cursor:none !important; }
+  }
+  #droneCursor{
+    position:fixed; top:0; left:0; width:46px; height:46px;
+    pointer-events:none; z-index:9999;
+    transform:translate(-50%,-50%);
+    opacity:0; transition:opacity .25s ease;
+    will-change:transform;
+  }
+  #droneCursor.active{opacity:1;}
+  #droneCursor svg{width:100%; height:100%; overflow:visible;}
+  .cur-blade{stroke:var(--cyan); stroke-width:1.4; opacity:0.75;}
+  .cur-light{fill:var(--amber); animation:curBlink 1s steps(1) infinite;}
+  @keyframes curBlink{ 0%,49%{opacity:1;} 50%,100%{opacity:0.15;} }
 </style>
 </head>
 <body>
 
 <div class="intro-overlay" id="introOverlay">
   <div class="intro-name mono" id="introName">PRAMOD GURAV</div>
+</div>
+
+<div id="droneCursor" aria-hidden="true">
+  <svg viewBox="0 0 60 60">
+    <line x1="30" y1="30" x2="10" y2="14" stroke="var(--cyan)" stroke-width="2"/>
+    <line x1="30" y1="30" x2="50" y2="14" stroke="var(--cyan)" stroke-width="2"/>
+    <line x1="30" y1="30" x2="10" y2="46" stroke="var(--amber)" stroke-width="2"/>
+    <line x1="30" y1="30" x2="50" y2="46" stroke="var(--amber)" stroke-width="2"/>
+
+    <circle cx="10" cy="14" r="7" fill="var(--bg)" stroke="var(--cyan)" stroke-width="1.6"/>
+    <circle cx="50" cy="14" r="7" fill="var(--bg)" stroke="var(--cyan)" stroke-width="1.6"/>
+    <circle cx="10" cy="46" r="7" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
+    <circle cx="50" cy="46" r="7" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
+
+    <g>
+      <line x1="4" y1="14" x2="16" y2="14" class="cur-blade"/>
+      <line x1="10" y1="8" x2="10" y2="20" class="cur-blade"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 10 14" to="360 10 14" dur="0.35s" repeatCount="indefinite"/>
+    </g>
+    <g>
+      <line x1="44" y1="14" x2="56" y2="14" class="cur-blade"/>
+      <line x1="50" y1="8" x2="50" y2="20" class="cur-blade"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 50 14" to="-360 50 14" dur="0.35s" repeatCount="indefinite"/>
+    </g>
+    <g>
+      <line x1="4" y1="46" x2="16" y2="46" class="cur-blade"/>
+      <line x1="10" y1="40" x2="10" y2="52" class="cur-blade"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 10 46" to="-360 10 46" dur="0.35s" repeatCount="indefinite"/>
+    </g>
+    <g>
+      <line x1="44" y1="46" x2="56" y2="46" class="cur-blade"/>
+      <line x1="50" y1="40" x2="50" y2="52" class="cur-blade"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 50 46" to="360 50 46" dur="0.35s" repeatCount="indefinite"/>
+    </g>
+
+    <rect x="20" y="23" width="20" height="14" rx="4" fill="var(--panel-raised)" stroke="var(--line-bright)" stroke-width="1"/>
+    <circle class="cur-light" cx="30" cy="30" r="2.6"/>
+  </svg>
 </div>
 
 <header>
@@ -706,11 +848,19 @@
     <div class="wrap">
       <div class="section-head"><span class="idx mono">04</span><h2>Research</h2></div>
       <div class="paper-card bbox">
-        <span class="bbox-tag mono">conference paper</span>
-        <div class="paper-venue mono">Presented at BHU Varanasi · 9–11 Oct 2025</div>
+        <span class="bbox-tag mono">conference paper · first author</span>
+        <div class="paper-venue mono">International Conference on Integrating Urban, Rural &amp; Tribal Development for SDGs: Vision for Viksit Bharat@2047 · BHU, Varanasi · 9–11 Oct 2025</div>
         <h3 class="paper-title">GIS-Based Assessment of Vegetation Dynamics and Related Rural Development of Belagavi District towards Sustainable Planning</h3>
-        <p class="paper-desc">Presented and selected for publication at the International Conference on "Integrating Urban, Rural and Tribal Development for Achieving Sustainable Development Goals: Vision for Viksit Bharat@2047," held at Banaras Hindu University (BHU), Varanasi.</p>
-        <div class="paper-meta">Host institution: <a href="https://www.linkedin.com/company/banarashinduuniversity/" target="_blank" rel="noopener">Banaras Hindu University ↗</a></div>
+        <p class="paper-desc">First-author paper presented and selected for publication at the international conference, using Remote Sensing and GIS to connect vegetation change with rural development trends across Belagavi District.</p>
+        <ul class="paper-list">
+          <li>Applied Remote Sensing and GIS (RS-GIS) techniques to perform spatial and temporal analysis of vegetation dynamics across Belagavi District using NDVI-based assessment over a ten-year period.</li>
+          <li>Analyzed vegetation, land-use patterns, population shifts, and socio-economic indicators across talukas to identify regional development trends and their relationship with environmental changes.</li>
+          <li>Presented data-driven findings aligned with Sustainable Development Goals (SDGs 2, 13, and 15), demonstrating the use of geospatial analysis for sustainable and resilient rural planning.</li>
+        </ul>
+        <div class="paper-meta">
+          <span>Host institution: <a href="https://www.linkedin.com/company/banarashinduuniversity/" target="_blank" rel="noopener">Banaras Hindu University ↗</a></span>
+          <span><a href="https://www.linkedin.com/posts/pramod-gurav-218a43259_research-gis-remotesensing-activity-7387519705831591936-T-Ku" target="_blank" rel="noopener">View LinkedIn post ↗</a></span>
+        </div>
       </div>
     </div>
   </section>
@@ -721,41 +871,112 @@
       <div class="section-head"><span class="idx mono">05</span><h2>Writing</h2></div>
       <p class="scroll-hint mono">↔ scroll · tap a card to read on Substack</p>
       <div class="blog-scroller" id="blogScroller">
-        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/stage-0-beginning-our-research-journey" target="_blank" rel="noopener">
-          <span class="bbox-tag mono">01</span>
-          <div class="blog-title">Stage 0: Beginning Our Research Journey — Spatio-Temporal Analysis of Rural &amp; Agricultural Development</div>
-          <div class="blog-open mono">Read on Substack →</div>
+
+        <a class="blog-card bbox blog-latest" href="https://pramodgurav.substack.com/p/how-a-gpu-processes-an-image-from" target="_blank" rel="noopener">
+          <span class="blog-latest-badge mono">LATEST</span>
+          <div class="blog-media">
+            <div class="blog-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 4v16M15 4v16M4 9h16M4 15h16"/></svg>
+            </div>
+          </div>
+          <div class="blog-body">
+            <span class="blog-idx mono">latest</span>
+            <div class="blog-title">How a GPU Processes an Image: From Pixels to CUDA Threads</div>
+            <div class="blog-open mono">Read on Substack →</div>
+          </div>
         </a>
-        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/have-you-ever-wondered-how-your-mouse" target="_blank" rel="noopener">
-          <span class="bbox-tag mono">02</span>
-          <div class="blog-title">Have You Ever Wondered How Your Mouse Actually Works?</div>
-          <div class="blog-open mono">Read on Substack →</div>
-        </a>
-        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/building-a-virtual-hand-gesture-mouse" target="_blank" rel="noopener">
-          <span class="bbox-tag mono">03</span>
-          <div class="blog-title">Building a Virtual Hand Gesture Mouse using Python, OpenCV &amp; MediaPipe</div>
-          <div class="blog-open mono">Read on Substack →</div>
-        </a>
-        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/why-we-built-a-pid-based-system-understanding" target="_blank" rel="noopener">
-          <span class="bbox-tag mono">04</span>
-          <div class="blog-title">Why We Built a PID-Based System — Understanding the Heart of Control Systems</div>
-          <div class="blog-open mono">Read on Substack →</div>
-        </a>
-        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/how-robots-actually-find-their-path" target="_blank" rel="noopener">
-          <span class="bbox-tag mono">05</span>
-          <div class="blog-title">How Robots Actually Find Their Path: The Power of Sensor Fusion</div>
-          <div class="blog-open mono">Read on Substack →</div>
-        </a>
-        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/from-pixels-to-motion-understanding" target="_blank" rel="noopener">
-          <span class="bbox-tag mono">06</span>
-          <div class="blog-title">From Pixels to Motion: Understanding Computer Vision for Navigation</div>
-          <div class="blog-open mono">Read on Substack →</div>
-        </a>
+
         <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/canny-edge-detection-the-algorithm" target="_blank" rel="noopener">
-          <span class="bbox-tag mono">07</span>
-          <div class="blog-title">Canny Edge Detection: The Algorithm That Taught Computers to See Boundaries</div>
-          <div class="blog-open mono">Read on Substack →</div>
+          <div class="blog-media">
+            <div class="blog-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="13" rx="1"/><path d="M3 13l5-4 4 3 5-5 4 3"/><circle cx="8" cy="9" r="1"/></svg>
+            </div>
+          </div>
+          <div class="blog-body">
+            <span class="blog-idx mono">07</span>
+            <div class="blog-title">Canny Edge Detection: The Algorithm That Taught Computers to See Boundaries</div>
+            <div class="blog-open mono">Read on Substack →</div>
+          </div>
         </a>
+
+        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/from-pixels-to-motion-understanding" target="_blank" rel="noopener">
+          <div class="blog-media">
+            <div class="blog-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg>
+            </div>
+          </div>
+          <div class="blog-body">
+            <span class="blog-idx mono">06</span>
+            <div class="blog-title">From Pixels to Motion: Understanding Computer Vision for Navigation</div>
+            <div class="blog-open mono">Read on Substack →</div>
+          </div>
+        </a>
+
+        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/how-robots-actually-find-their-path" target="_blank" rel="noopener">
+          <div class="blog-media">
+            <div class="blog-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+          </div>
+          <div class="blog-body">
+            <span class="blog-idx mono">05</span>
+            <div class="blog-title">How Robots Actually Find Their Path: The Power of Sensor Fusion</div>
+            <div class="blog-open mono">Read on Substack →</div>
+          </div>
+        </a>
+
+        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/why-we-built-a-pid-based-system-understanding" target="_blank" rel="noopener">
+          <div class="blog-media">
+            <div class="blog-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17c3-8 5 8 8 0s5-8 8 0" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="blog-body">
+            <span class="blog-idx mono">04</span>
+            <div class="blog-title">Why We Built a PID-Based System — Understanding the Heart of Control Systems</div>
+            <div class="blog-open mono">Read on Substack →</div>
+          </div>
+        </a>
+
+        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/building-a-virtual-hand-gesture-mouse" target="_blank" rel="noopener">
+          <div class="blog-media">
+            <div class="blog-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12V6a2 2 0 1 1 4 0v6"/><path d="M13 8a2 2 0 1 1 4 0v5"/><path d="M17 11a2 2 0 1 1 4 0v3a6 6 0 0 1-6 6h-2a6 6 0 0 1-5-3l-2.5-4a1.8 1.8 0 0 1 3-2L9 13"/></svg>
+            </div>
+          </div>
+          <div class="blog-body">
+            <span class="blog-idx mono">03</span>
+            <div class="blog-title">Building a Virtual Hand Gesture Mouse using Python, OpenCV &amp; MediaPipe</div>
+            <div class="blog-open mono">Read on Substack →</div>
+          </div>
+        </a>
+
+        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/have-you-ever-wondered-how-your-mouse" target="_blank" rel="noopener">
+          <div class="blog-media">
+            <div class="blog-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 3v7"/></svg>
+            </div>
+          </div>
+          <div class="blog-body">
+            <span class="blog-idx mono">02</span>
+            <div class="blog-title">Have You Ever Wondered How Your Mouse Actually Works?</div>
+            <div class="blog-open mono">Read on Substack →</div>
+          </div>
+        </a>
+
+        <a class="blog-card bbox" href="https://pramodgurav.substack.com/p/stage-0-beginning-our-research-journey" target="_blank" rel="noopener">
+          <div class="blog-media">
+            <div class="blog-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20l6-14 4 8 3-5 3 11"/></svg>
+            </div>
+          </div>
+          <div class="blog-body">
+            <span class="blog-idx mono">01</span>
+            <div class="blog-title">Stage 0: Beginning Our Research Journey — Spatio-Temporal Analysis of Rural &amp; Agricultural Development</div>
+            <div class="blog-open mono">Read on Substack →</div>
+          </div>
+        </a>
+
       </div>
     </div>
   </section>
@@ -846,17 +1067,98 @@
     <div class="wrap">
       <div class="contact-card bbox">
         <span class="bbox-tag mono">let's talk</span>
-        <h2>Open to robotics &amp; computer vision roles, internships and research collaborations.</h2>
-        <div class="contact-links">
-          <a class="btn btn-primary" href="mailto:pramodgurav422@gmail.com">pramodgurav422@gmail.com</a>
-          <a class="btn btn-ghost" href="https://github.com/Pramod-Gurav" target="_blank" rel="noopener">GitHub ↗</a>
-          <a class="btn btn-ghost" href="https://www.linkedin.com/in/pramod-gurav-218a43259/" target="_blank" rel="noopener">LinkedIn ↗</a>
-          <a class="btn btn-ghost" href="https://pramodgurav.substack.com" target="_blank" rel="noopener">Substack ↗</a>
-          <a class="btn btn-ghost" href="https://drive.google.com/file/d/1ivHh8n14fRMX5i1k7VK7D1-WJl2KCaae/view?usp=sharing" target="_blank" rel="noopener">View resume ↗</a>
+        <div class="contact-flex">
+          <div class="contact-content">
+            <h2>Open to robotics &amp; computer vision roles, internships and research collaborations.</h2>
+            <div class="contact-links">
+              <a class="btn btn-primary" href="mailto:pramodgurav422@gmail.com">pramodgurav422@gmail.com</a>
+              <a class="btn btn-ghost" href="https://github.com/Pramod-Gurav" target="_blank" rel="noopener">GitHub ↗</a>
+              <a class="btn btn-ghost" href="https://www.linkedin.com/in/pramod-gurav-218a43259/" target="_blank" rel="noopener">LinkedIn ↗</a>
+              <a class="btn btn-ghost" href="https://pramodgurav.substack.com" target="_blank" rel="noopener">Substack ↗</a>
+              <a class="btn btn-ghost" href="https://drive.google.com/file/d/1ivHh8n14fRMX5i1k7VK7D1-WJl2KCaae/view?usp=sharing" target="_blank" rel="noopener">View resume ↗</a>
+            </div>
+          </div>
+
+          <div class="contact-bot" id="contactBot" aria-hidden="true">
+            <svg viewBox="0 0 140 170" xmlns="http://www.w3.org/2000/svg">
+              <g id="botSway">
+                <line x1="60" y1="95" x2="60" y2="112" stroke="var(--line-bright)" stroke-width="3"/>
+                <ellipse cx="60" cy="120" rx="26" ry="14" fill="var(--panel-raised)" stroke="var(--line-bright)" stroke-width="1.5"/>
+
+                <circle cx="42" cy="136" r="9" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
+                <circle cx="42" cy="136" r="3" fill="var(--amber)"/>
+                <circle cx="78" cy="136" r="9" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
+                <circle cx="78" cy="136" r="3" fill="var(--amber)"/>
+
+                <g id="botArm">
+                  <line x1="86" y1="118" x2="106" y2="100" stroke="var(--line-bright)" stroke-width="3" stroke-linecap="round"/>
+                  <circle cx="106" cy="100" r="6" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.4"/>
+                </g>
+
+                <g id="botHead">
+                  <rect x="30" y="34" width="60" height="52" rx="16" fill="var(--panel-raised)" stroke="var(--line-bright)" stroke-width="1.5"/>
+                  <circle cx="60" cy="26" r="4" fill="var(--panel-raised)" stroke="var(--cyan)" stroke-width="1.4"/>
+                  <line x1="60" y1="30" x2="60" y2="34" stroke="var(--line-bright)" stroke-width="1.4"/>
+
+                  <circle cx="46" cy="60" r="10" fill="#04191a" stroke="var(--line-bright)" stroke-width="1"/>
+                  <circle cx="74" cy="60" r="10" fill="#04191a" stroke="var(--line-bright)" stroke-width="1"/>
+                  <circle id="pupilL" cx="46" cy="60" r="4" fill="var(--cyan)"/>
+                  <circle id="pupilR" cx="74" cy="60" r="4" fill="var(--cyan)"/>
+
+                  <path id="botMouth" d="M50 74 Q60 79 70 74" stroke="var(--amber)" stroke-width="2" fill="none" stroke-linecap="round"/>
+                </g>
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- FUN BUTTON -->
+  <div class="fun-zone">
+    <button class="fun-btn mono" id="funBtn">⚡ Try this for fun</button>
+  </div>
+
+  <div class="chaos-overlay" id="chaosOverlay" aria-hidden="true">
+    <div class="chaos-arena">
+      <div class="chaos-drone" id="chaosDrone">
+        <svg viewBox="0 0 60 60">
+          <line x1="30" y1="30" x2="10" y2="14" stroke="var(--cyan)" stroke-width="2"/>
+          <line x1="30" y1="30" x2="50" y2="14" stroke="var(--cyan)" stroke-width="2"/>
+          <line x1="30" y1="30" x2="10" y2="46" stroke="var(--amber)" stroke-width="2"/>
+          <line x1="30" y1="30" x2="50" y2="46" stroke="var(--amber)" stroke-width="2"/>
+          <circle cx="10" cy="14" r="7" fill="var(--bg)" stroke="var(--cyan)" stroke-width="1.6"/>
+          <circle cx="50" cy="14" r="7" fill="var(--bg)" stroke="var(--cyan)" stroke-width="1.6"/>
+          <circle cx="10" cy="46" r="7" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
+          <circle cx="50" cy="46" r="7" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
+          <g><line x1="4" y1="14" x2="16" y2="14" class="cur-blade"/><line x1="10" y1="8" x2="10" y2="20" class="cur-blade"/><animateTransform attributeName="transform" type="rotate" from="0 10 14" to="360 10 14" dur="0.2s" repeatCount="indefinite"/></g>
+          <g><line x1="44" y1="14" x2="56" y2="14" class="cur-blade"/><line x1="50" y1="8" x2="50" y2="20" class="cur-blade"/><animateTransform attributeName="transform" type="rotate" from="0 50 14" to="-360 50 14" dur="0.2s" repeatCount="indefinite"/></g>
+          <g><line x1="4" y1="46" x2="16" y2="46" class="cur-blade"/><line x1="10" y1="40" x2="10" y2="52" class="cur-blade"/><animateTransform attributeName="transform" type="rotate" from="0 10 46" to="-360 10 46" dur="0.2s" repeatCount="indefinite"/></g>
+          <g><line x1="44" y1="46" x2="56" y2="46" class="cur-blade"/><line x1="50" y1="40" x2="50" y2="52" class="cur-blade"/><animateTransform attributeName="transform" type="rotate" from="0 50 46" to="360 50 46" dur="0.2s" repeatCount="indefinite"/></g>
+          <rect x="20" y="23" width="20" height="14" rx="4" fill="var(--panel-raised)" stroke="var(--line-bright)" stroke-width="1"/>
+          <circle class="cur-light" cx="30" cy="30" r="2.6"/>
+        </svg>
+      </div>
+      <div class="chaos-bot" id="chaosBotFight">
+        <svg viewBox="0 0 140 170">
+          <line x1="60" y1="95" x2="60" y2="112" stroke="var(--line-bright)" stroke-width="3"/>
+          <ellipse cx="60" cy="120" rx="26" ry="14" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.5"/>
+          <circle cx="42" cy="136" r="9" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
+          <circle cx="78" cy="136" r="9" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
+          <line x1="86" y1="118" x2="110" y2="96" stroke="var(--amber)" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="110" cy="96" r="6" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.4"/>
+          <rect x="30" y="34" width="60" height="52" rx="16" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.5"/>
+          <circle cx="46" cy="60" r="10" fill="#04191a" stroke="var(--amber)" stroke-width="1"/>
+          <circle cx="74" cy="60" r="10" fill="#04191a" stroke="var(--amber)" stroke-width="1"/>
+          <circle cx="46" cy="60" r="4" fill="var(--cyan)"/>
+          <circle cx="74" cy="60" r="4" fill="var(--cyan)"/>
+          <path d="M48 78 Q60 70 72 78" stroke="var(--amber)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="chaos-text mono" id="chaosText"></div>
+    </div>
+  </div>
 
 </main>
 
@@ -912,6 +1214,178 @@
       }
     };
     step();
+  })();
+
+  // Custom drone cursor: follows the mouse with a slight lerp for a "flying" feel,
+  // and does small idle hover moves when the mouse sits still
+  (function(){
+    const isFinePointer = window.matchMedia('(pointer:fine)').matches;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!isFinePointer || prefersReduced) return;
+
+    document.documentElement.classList.add('drone-cursor');
+    const cursor = document.getElementById('droneCursor');
+
+    let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
+    let curX = mouseX, curY = mouseY;
+    let lastMoveTime = performance.now();
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      lastMoveTime = performance.now();
+      cursor.classList.add('active');
+    });
+    window.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+
+    function raf(t){
+      const idleFor = t - lastMoveTime;
+      let targetX = mouseX, targetY = mouseY;
+
+      if(idleFor > 1100){
+        // small idle hover pattern while the mouse sits still
+        targetX = mouseX + Math.sin(t / 480) * 9;
+        targetY = mouseY + Math.cos(t / 620) * 7;
+      }
+
+      const prevX = curX, prevY = curY;
+      curX += (targetX - curX) * (idleFor > 1100 ? 0.08 : 0.22);
+      curY += (targetY - curY) * (idleFor > 1100 ? 0.08 : 0.22);
+
+      const dx = curX - prevX, dy = curY - prevY;
+      const tilt = Math.max(-18, Math.min(18, dx * 1.6));
+      const lift = Math.max(-6, Math.min(6, -dy * 0.8));
+
+      cursor.style.transform = `translate(${curX}px, ${curY}px) translate(-50%,-50%) rotate(${tilt}deg) translateY(${lift}px)`;
+
+      window.__droneX = curX; window.__droneY = curY;
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    document.addEventListener('mousedown', () => {
+      cursor.style.filter = 'brightness(1.4)';
+      setTimeout(() => cursor.style.filter = '', 160);
+    });
+  })();
+
+  // Contact-section robot: idle sway/blink, looks toward the drone cursor when nearby
+  (function(){
+    const bot = document.getElementById('contactBot');
+    if(!bot) return;
+    const pupilL = document.getElementById('pupilL');
+    const pupilR = document.getElementById('pupilR');
+    const head = document.getElementById('botHead');
+    const sway = document.getElementById('botSway');
+    const mouth = document.getElementById('botMouth');
+
+    let idleT = 0;
+    let lastBlink = 0;
+
+    function frame(t){
+      idleT += 0.016;
+      const rect = bot.getBoundingClientRect();
+      const cx = rect.left + rect.width/2;
+      const cy = rect.top + rect.height*0.42;
+
+      const px = (typeof window.__droneX === 'number') ? window.__droneX : cx;
+      const py = (typeof window.__droneY === 'number') ? window.__droneY : cy;
+
+      const dx = px - cx, dy = py - cy;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      const near = dist < 340;
+
+      if(near){
+        const ang = Math.atan2(dy, dx);
+        const ex = Math.cos(ang) * 3.2;
+        const ey = Math.sin(ang) * 2.4;
+        pupilL.setAttribute('cx', 46 + ex);
+        pupilL.setAttribute('cy', 60 + ey);
+        pupilR.setAttribute('cx', 74 + ex);
+        pupilR.setAttribute('cy', 60 + ey);
+        const tilt = Math.max(-10, Math.min(10, dx * 0.02));
+        head.setAttribute('transform', `rotate(${tilt} 60 60)`);
+        mouth.setAttribute('d', 'M50 75 Q60 81 70 75');
+        bot.classList.add('bot-wave');
+
+        const swayX = Math.sin(idleT * 2.4) * 7;
+        const swayY = Math.sin(idleT * 0.8) * 2;
+        sway.setAttribute('transform', `translate(${swayX} ${swayY})`);
+      } else {
+        const idleX = Math.sin(idleT * 0.9) * 2.2;
+        const idleY = Math.cos(idleT * 0.7) * 1.4;
+        pupilL.setAttribute('cx', 46 + idleX);
+        pupilL.setAttribute('cy', 60 + idleY);
+        pupilR.setAttribute('cx', 74 + idleX);
+        pupilR.setAttribute('cy', 60 + idleY);
+        head.setAttribute('transform', `rotate(${Math.sin(idleT*0.5)*3} 60 60)`);
+        mouth.setAttribute('d', 'M50 74 Q60 79 70 74');
+        bot.classList.remove('bot-wave');
+
+        sway.setAttribute('transform', `translate(0 ${Math.sin(idleT*0.8)*2})`);
+      }
+
+      if(t - lastBlink > 3200 + Math.random()*2000){
+        lastBlink = t;
+        pupilL.setAttribute('opacity','0'); pupilR.setAttribute('opacity','0');
+        setTimeout(()=>{ pupilL.setAttribute('opacity','1'); pupilR.setAttribute('opacity','1'); }, 120);
+      }
+
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+
+  // Fun button: drone-vs-robot chaos battle, then reload the page (like a reboot)
+  (function(){
+    const btn = document.getElementById('funBtn');
+    const overlay = document.getElementById('chaosOverlay');
+    if(!btn || !overlay) return;
+
+    btn.addEventListener('click', () => {
+      const drone = document.getElementById('chaosDrone');
+      const bot = document.getElementById('chaosBotFight');
+      const text = document.getElementById('chaosText');
+      const arena = overlay.querySelector('.chaos-arena');
+
+      overlay.classList.add('active');
+      document.body.classList.add('chaos-shake', 'chaos-lock');
+      btn.disabled = true;
+
+      const flyInterval = setInterval(() => {
+        drone.style.left = (8 + Math.random()*72) + '%';
+        drone.style.top = (8 + Math.random()*60) + '%';
+
+        const spark = document.createElement('div');
+        spark.className = 'chaos-spark';
+        spark.style.left = drone.style.left;
+        spark.style.top = drone.style.top;
+        arena.appendChild(spark);
+        setTimeout(() => spark.remove(), 420);
+      }, 240);
+
+      const botShakeInterval = setInterval(() => {
+        bot.style.transform = `translate(${(Math.random()-0.5)*24}px, ${(Math.random()-0.5)*16}px) rotate(${(Math.random()-0.5)*12}deg)`;
+      }, 110);
+
+      setTimeout(() => {
+        text.textContent = 'PORTFOLIO.EXE HAS STOPPED RESPONDING';
+        text.classList.add('show');
+      }, 1600);
+
+      setTimeout(() => {
+        text.textContent = 'REBOOTING SYSTEM...';
+      }, 2900);
+
+      setTimeout(() => {
+        clearInterval(flyInterval);
+        clearInterval(botShakeInterval);
+        document.body.classList.add('chaos-fade');
+      }, 3500);
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 4300);
+    });
   })();
 </script>
 
