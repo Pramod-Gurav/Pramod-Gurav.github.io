@@ -427,13 +427,24 @@
   .contact-content{flex:1 1 380px; min-width:260px;}
   .contact-bot{flex:none; width:130px; height:170px; pointer-events:none;}
   @media (max-width:760px){ .contact-bot{display:none;} }
-  #botArm{transform-box:fill-box; transform-origin:0% 100%;}
-  .bot-wave #botArm{animation:botWave 0.85s ease-in-out infinite;}
-  @keyframes botWave{
+  #botArmL{transform-box:fill-box; transform-origin:100% 0%;}
+  #botArmR{transform-box:fill-box; transform-origin:0% 0%;}
+  .bot-wave #botArmL{animation:armWaveL 0.8s ease-in-out infinite;}
+  .bot-wave #botArmR{animation:armWaveR 0.8s ease-in-out infinite 0.15s;}
+  .bot-idle-wave #botArmL{animation:armWaveL 0.8s ease-in-out 2;}
+  .bot-antenna-light{fill:var(--amber); animation:antennaBlink 2.4s ease-in-out infinite;}
+  @keyframes antennaBlink{ 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+  @keyframes armWaveL{
     0%,100%{ transform:rotate(0deg); }
-    25%{ transform:rotate(-24deg); }
-    50%{ transform:rotate(-6deg); }
-    75%{ transform:rotate(-28deg); }
+    25%{ transform:rotate(-20deg); }
+    50%{ transform:rotate(-4deg); }
+    75%{ transform:rotate(-22deg); }
+  }
+  @keyframes armWaveR{
+    0%,100%{ transform:rotate(0deg); }
+    25%{ transform:rotate(20deg); }
+    50%{ transform:rotate(4deg); }
+    75%{ transform:rotate(22deg); }
   }
   footer{border-top:1px solid var(--line); padding:26px 0; color:var(--muted-dim); font-size:0.8rem;}
   .foot-wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;}
@@ -1080,32 +1091,57 @@
           </div>
 
           <div class="contact-bot" id="contactBot" aria-hidden="true">
-            <svg viewBox="0 0 140 170" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 170 200" xmlns="http://www.w3.org/2000/svg">
               <g id="botSway">
-                <line x1="60" y1="95" x2="60" y2="112" stroke="var(--line-bright)" stroke-width="3"/>
-                <ellipse cx="60" cy="120" rx="26" ry="14" fill="var(--panel-raised)" stroke="var(--line-bright)" stroke-width="1.5"/>
 
-                <circle cx="42" cy="136" r="9" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
-                <circle cx="42" cy="136" r="3" fill="var(--amber)"/>
-                <circle cx="78" cy="136" r="9" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
-                <circle cx="78" cy="136" r="3" fill="var(--amber)"/>
+                <!-- tracked wheels -->
+                <rect x="45" y="150" width="36" height="22" rx="11" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.4"/>
+                <circle cx="56" cy="161" r="6" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.2"/>
+                <circle cx="74" cy="161" r="6" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.2"/>
+                <rect x="89" y="150" width="36" height="22" rx="11" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.4"/>
+                <circle cx="96" cy="161" r="6" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.2"/>
+                <circle cx="114" cy="161" r="6" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.2"/>
 
-                <g id="botArm">
-                  <line x1="86" y1="118" x2="106" y2="100" stroke="var(--line-bright)" stroke-width="3" stroke-linecap="round"/>
-                  <circle cx="106" cy="100" r="6" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.4"/>
+                <!-- boxy torso -->
+                <path d="M58 92 L112 92 L118 152 L52 152 Z" fill="var(--panel-raised)" stroke="var(--line-bright)" stroke-width="1.5"/>
+                <rect x="68" y="104" width="34" height="18" rx="3" fill="none" stroke="var(--line-bright)" stroke-width="1"/>
+
+                <!-- left arm -->
+                <g id="botArmL">
+                  <line x1="58" y1="106" x2="34" y2="120" stroke="var(--line-bright)" stroke-width="4" stroke-linecap="round"/>
+                  <line x1="34" y1="120" x2="20" y2="140" stroke="var(--line-bright)" stroke-width="4" stroke-linecap="round"/>
+                  <line x1="20" y1="140" x2="12" y2="130" stroke="var(--amber)" stroke-width="2.2" stroke-linecap="round"/>
+                  <line x1="20" y1="140" x2="9" y2="142" stroke="var(--amber)" stroke-width="2.2" stroke-linecap="round"/>
+                  <line x1="20" y1="140" x2="15" y2="152" stroke="var(--amber)" stroke-width="2.2" stroke-linecap="round"/>
                 </g>
 
+                <!-- right arm -->
+                <g id="botArmR">
+                  <line x1="112" y1="106" x2="136" y2="120" stroke="var(--line-bright)" stroke-width="4" stroke-linecap="round"/>
+                  <line x1="136" y1="120" x2="150" y2="140" stroke="var(--line-bright)" stroke-width="4" stroke-linecap="round"/>
+                  <line x1="150" y1="140" x2="158" y2="130" stroke="var(--amber)" stroke-width="2.2" stroke-linecap="round"/>
+                  <line x1="150" y1="140" x2="161" y2="142" stroke="var(--amber)" stroke-width="2.2" stroke-linecap="round"/>
+                  <line x1="150" y1="140" x2="155" y2="152" stroke="var(--amber)" stroke-width="2.2" stroke-linecap="round"/>
+                </g>
+
+                <!-- neck -->
+                <rect x="79" y="78" width="12" height="16" fill="var(--panel-raised)" stroke="var(--line-bright)" stroke-width="1.4"/>
+
+                <!-- antenna -->
+                <line x1="60" y1="60" x2="54" y2="46" stroke="var(--line-bright)" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="54" cy="44" r="3" class="bot-antenna-light"/>
+
+                <!-- binocular head -->
                 <g id="botHead">
-                  <rect x="30" y="34" width="60" height="52" rx="16" fill="var(--panel-raised)" stroke="var(--line-bright)" stroke-width="1.5"/>
-                  <circle cx="60" cy="26" r="4" fill="var(--panel-raised)" stroke="var(--cyan)" stroke-width="1.4"/>
-                  <line x1="60" y1="30" x2="60" y2="34" stroke="var(--line-bright)" stroke-width="1.4"/>
+                  <rect x="48" y="60" width="74" height="22" rx="11" fill="var(--panel-raised)" stroke="var(--line-bright)" stroke-width="1.5"/>
 
-                  <circle cx="46" cy="60" r="10" fill="#04191a" stroke="var(--line-bright)" stroke-width="1"/>
-                  <circle cx="74" cy="60" r="10" fill="#04191a" stroke="var(--line-bright)" stroke-width="1"/>
-                  <circle id="pupilL" cx="46" cy="60" r="4" fill="var(--cyan)"/>
-                  <circle id="pupilR" cx="74" cy="60" r="4" fill="var(--cyan)"/>
+                  <circle cx="64" cy="71" r="17" fill="#04191a" stroke="var(--line-bright)" stroke-width="1.4"/>
+                  <circle cx="64" cy="71" r="12" fill="none" stroke="var(--cyan)" stroke-width="1"/>
+                  <circle id="pupilL" cx="64" cy="71" r="5" fill="var(--cyan)"/>
 
-                  <path id="botMouth" d="M50 74 Q60 79 70 74" stroke="var(--amber)" stroke-width="2" fill="none" stroke-linecap="round"/>
+                  <circle cx="106" cy="71" r="17" fill="#04191a" stroke="var(--line-bright)" stroke-width="1.4"/>
+                  <circle cx="106" cy="71" r="12" fill="none" stroke="var(--cyan)" stroke-width="1"/>
+                  <circle id="pupilR" cx="106" cy="71" r="5" fill="var(--cyan)"/>
                 </g>
               </g>
             </svg>
@@ -1141,19 +1177,18 @@
         </svg>
       </div>
       <div class="chaos-bot" id="chaosBotFight">
-        <svg viewBox="0 0 140 170">
-          <line x1="60" y1="95" x2="60" y2="112" stroke="var(--line-bright)" stroke-width="3"/>
-          <ellipse cx="60" cy="120" rx="26" ry="14" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.5"/>
-          <circle cx="42" cy="136" r="9" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
-          <circle cx="78" cy="136" r="9" fill="var(--bg)" stroke="var(--amber)" stroke-width="1.6"/>
-          <line x1="86" y1="118" x2="110" y2="96" stroke="var(--amber)" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="110" cy="96" r="6" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.4"/>
-          <rect x="30" y="34" width="60" height="52" rx="16" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.5"/>
-          <circle cx="46" cy="60" r="10" fill="#04191a" stroke="var(--amber)" stroke-width="1"/>
-          <circle cx="74" cy="60" r="10" fill="#04191a" stroke="var(--amber)" stroke-width="1"/>
-          <circle cx="46" cy="60" r="4" fill="var(--cyan)"/>
-          <circle cx="74" cy="60" r="4" fill="var(--cyan)"/>
-          <path d="M48 78 Q60 70 72 78" stroke="var(--amber)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <svg viewBox="0 0 170 200">
+          <rect x="45" y="150" width="36" height="22" rx="11" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.4"/>
+          <rect x="89" y="150" width="36" height="22" rx="11" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.4"/>
+          <path d="M58 92 L112 92 L118 152 L52 152 Z" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.5"/>
+          <line x1="58" y1="106" x2="20" y2="132" stroke="var(--amber)" stroke-width="4" stroke-linecap="round"/>
+          <line x1="112" y1="106" x2="150" y2="132" stroke="var(--amber)" stroke-width="4" stroke-linecap="round"/>
+          <rect x="79" y="78" width="12" height="16" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.4"/>
+          <rect x="48" y="60" width="74" height="22" rx="11" fill="var(--panel-raised)" stroke="var(--amber)" stroke-width="1.5"/>
+          <circle cx="64" cy="71" r="17" fill="#04191a" stroke="var(--amber)" stroke-width="1.4"/>
+          <circle cx="106" cy="71" r="17" fill="#04191a" stroke="var(--amber)" stroke-width="1.4"/>
+          <circle cx="64" cy="71" r="5" fill="#ff4d4d"/>
+          <circle cx="106" cy="71" r="5" fill="#ff4d4d"/>
         </svg>
       </div>
       <div class="chaos-text mono" id="chaosText"></div>
@@ -1175,11 +1210,14 @@
   navtoggle.addEventListener('click', () => navlinks.classList.toggle('open'));
   navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navlinks.classList.remove('open')));
 
-  // Intro splash: cycle name through scripts with a glitch effect, then settle
-  (function(){
+  // Intro splash: cycle name through scripts with a glitch effect, then settle.
+  // Exposed as window.__playIntro so the chaos button can replay it as a "reboot".
+  window.__playIntro = function(){
     const overlay = document.getElementById('introOverlay');
     const nameEl = document.getElementById('introName');
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    overlay.classList.remove('hide');
 
     if(prefersReduced){
       overlay.classList.add('hide');
@@ -1214,7 +1252,8 @@
       }
     };
     step();
-  })();
+  };
+  window.__playIntro();
 
   // Custom drone cursor: follows the mouse with a slight lerp for a "flying" feel,
   // and does small idle hover moves when the mouse sits still
@@ -1276,16 +1315,23 @@
     const pupilR = document.getElementById('pupilR');
     const head = document.getElementById('botHead');
     const sway = document.getElementById('botSway');
-    const mouth = document.getElementById('botMouth');
 
     let idleT = 0;
     let lastBlink = 0;
+
+    // Autonomous idle wave every so often, independent of drone proximity
+    setInterval(() => {
+      if(!bot.classList.contains('bot-wave')){
+        bot.classList.add('bot-idle-wave');
+        setTimeout(() => bot.classList.remove('bot-idle-wave'), 1700);
+      }
+    }, 6000 + Math.random() * 3000);
 
     function frame(t){
       idleT += 0.016;
       const rect = bot.getBoundingClientRect();
       const cx = rect.left + rect.width/2;
-      const cy = rect.top + rect.height*0.42;
+      const cy = rect.top + rect.height*0.4;
 
       const px = (typeof window.__droneX === 'number') ? window.__droneX : cx;
       const py = (typeof window.__droneY === 'number') ? window.__droneY : cy;
@@ -1296,29 +1342,27 @@
 
       if(near){
         const ang = Math.atan2(dy, dx);
-        const ex = Math.cos(ang) * 3.2;
-        const ey = Math.sin(ang) * 2.4;
-        pupilL.setAttribute('cx', 46 + ex);
-        pupilL.setAttribute('cy', 60 + ey);
-        pupilR.setAttribute('cx', 74 + ex);
-        pupilR.setAttribute('cy', 60 + ey);
-        const tilt = Math.max(-10, Math.min(10, dx * 0.02));
-        head.setAttribute('transform', `rotate(${tilt} 60 60)`);
-        mouth.setAttribute('d', 'M50 75 Q60 81 70 75');
+        const ex = Math.cos(ang) * 4;
+        const ey = Math.sin(ang) * 3;
+        pupilL.setAttribute('cx', 64 + ex);
+        pupilL.setAttribute('cy', 71 + ey);
+        pupilR.setAttribute('cx', 106 + ex);
+        pupilR.setAttribute('cy', 71 + ey);
+        const tilt = Math.max(-12, Math.min(12, dx * 0.02));
+        head.setAttribute('transform', `rotate(${tilt} 85 71)`);
         bot.classList.add('bot-wave');
 
         const swayX = Math.sin(idleT * 2.4) * 7;
         const swayY = Math.sin(idleT * 0.8) * 2;
         sway.setAttribute('transform', `translate(${swayX} ${swayY})`);
       } else {
-        const idleX = Math.sin(idleT * 0.9) * 2.2;
-        const idleY = Math.cos(idleT * 0.7) * 1.4;
-        pupilL.setAttribute('cx', 46 + idleX);
-        pupilL.setAttribute('cy', 60 + idleY);
-        pupilR.setAttribute('cx', 74 + idleX);
-        pupilR.setAttribute('cy', 60 + idleY);
-        head.setAttribute('transform', `rotate(${Math.sin(idleT*0.5)*3} 60 60)`);
-        mouth.setAttribute('d', 'M50 74 Q60 79 70 74');
+        const idleX = Math.sin(idleT * 0.9) * 2.4;
+        const idleY = Math.cos(idleT * 0.7) * 1.6;
+        pupilL.setAttribute('cx', 64 + idleX);
+        pupilL.setAttribute('cy', 71 + idleY);
+        pupilR.setAttribute('cx', 106 + idleX);
+        pupilR.setAttribute('cy', 71 + idleY);
+        head.setAttribute('transform', `rotate(${Math.sin(idleT*0.5)*3} 85 71)`);
         bot.classList.remove('bot-wave');
 
         sway.setAttribute('transform', `translate(0 ${Math.sin(idleT*0.8)*2})`);
@@ -1341,12 +1385,24 @@
     const overlay = document.getElementById('chaosOverlay');
     if(!btn || !overlay) return;
 
-    btn.addEventListener('click', () => {
-      const drone = document.getElementById('chaosDrone');
-      const bot = document.getElementById('chaosBotFight');
-      const text = document.getElementById('chaosText');
-      const arena = overlay.querySelector('.chaos-arena');
+    const arena = overlay.querySelector('.chaos-arena');
+    const drone = document.getElementById('chaosDrone');
+    const bot = document.getElementById('chaosBotFight');
+    const text = document.getElementById('chaosText');
 
+    function resetChaosUI(){
+      // Runs only if location.reload() was blocked (e.g. inside a sandboxed
+      // preview iframe) so the page doesn't get stuck mid-animation.
+      overlay.classList.remove('active');
+      document.body.classList.remove('chaos-shake', 'chaos-lock', 'chaos-fade');
+      text.classList.remove('show');
+      text.textContent = '';
+      drone.style.left = ''; drone.style.top = '';
+      bot.style.transform = '';
+      btn.disabled = false;
+    }
+
+    btn.addEventListener('click', () => {
       overlay.classList.add('active');
       document.body.classList.add('chaos-shake', 'chaos-lock');
       btn.disabled = true;
@@ -1383,7 +1439,10 @@
       }, 3500);
 
       setTimeout(() => {
-        window.location.reload();
+        try{ window.location.reload(); }catch(e){ /* blocked by sandbox */ }
+        // If reload actually happens, this page unloads and the line below
+        // never runs. If reload was blocked, this quietly restores the UI.
+        setTimeout(resetChaosUI, 700);
       }, 4300);
     });
   })();
